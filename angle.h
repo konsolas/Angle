@@ -36,6 +36,16 @@ namespace ang {
             return *this;
         }
 
+        constexpr basic_angle &operator*=(const rep &o) noexcept(std::is_arithmetic_v<rep>) {
+            value = wrap(value * o);
+            return *this;
+        }
+
+        constexpr basic_angle &operator/=(const rep &o) noexcept(std::is_arithmetic_v<rep>) {
+            value = wrap(value / o);
+            return *this;
+        }
+
         [[nodiscard]] constexpr rep radians() const noexcept(std::is_arithmetic_v<rep>) {
             return value;
         }
@@ -63,6 +73,32 @@ namespace ang {
     [[nodiscard]] constexpr basic_angle<rep, wrap>
     operator-(const basic_angle<rep, wrap> &r) noexcept(std::is_arithmetic_v<rep>) {
         return basic_angle<rep, wrap>(-r.radians());
+    }
+
+    template<floating_point rep, auto wrap>
+    [[nodiscard]] constexpr basic_angle<rep, wrap>
+    operator*(basic_angle<rep, wrap> l, const rep &r) noexcept(std::is_arithmetic_v<rep>) {
+        l *= r;
+        return l;
+    }
+
+    template<floating_point rep, auto wrap>
+    [[nodiscard]] constexpr basic_angle<rep, wrap>
+    operator*(const rep &l, const basic_angle<rep, wrap> &r) noexcept(std::is_arithmetic_v<rep>) {
+        return basic_angle<rep, wrap>(l * r.radians());
+    }
+
+    template<floating_point rep, auto wrap>
+    [[nodiscard]] constexpr basic_angle<rep, wrap>
+    operator/(basic_angle<rep, wrap> l, const rep &r) noexcept(std::is_arithmetic_v<rep>) {
+        l /= r;
+        return l;
+    }
+
+    template<floating_point rep, auto wrap>
+    [[nodiscard]] constexpr basic_angle<rep, wrap>
+    operator/(const rep &l, const basic_angle<rep, wrap> &r) noexcept(std::is_arithmetic_v<rep>) {
+        return basic_angle<rep, wrap>(l / r.radians());
     }
 
     template<floating_point rep, auto wrap>

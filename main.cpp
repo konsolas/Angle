@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <numeric>
 
 #include "angle.h"
 
@@ -46,6 +47,11 @@ int main() {
     std::cout << "sorted angles:";
     for (auto val : angles) std::cout << ' ' << val.radians() << " rad";
     std::cout << std::endl;
+
+    // Midpoint of two angles
+    angle e = 359.0_deg;
+    angle f = 1.0_deg;
+    std::cout << "(e + f) / 2 = " << ((e + f) / 2.0).degrees() << " deg" << std::endl; // 0 deg
 
     return 0;
 }
