@@ -24,7 +24,7 @@ namespace ang {
     public:
         constexpr basic_angle() = default;
         constexpr explicit basic_angle(rep value) noexcept(std::is_arithmetic_v<rep>)
-                : value(std::invoke(wrap, value)) {};
+                : value(wrap(value)) {};
 
         constexpr basic_angle &operator+=(const basic_angle &o) noexcept(std::is_arithmetic_v<rep>) {
             value = wrap(value + o.value);
@@ -68,7 +68,7 @@ namespace ang {
     template<floating_point rep, auto wrap>
     [[nodiscard]] constexpr bool
     operator==(const basic_angle<rep, wrap> &l, const basic_angle<rep, wrap> &r) noexcept(std::is_arithmetic_v<rep>) {
-        return l.value == r.value;
+        return l.radians() == r.radians();
     }
 
     template<floating_point rep, auto wrap>
